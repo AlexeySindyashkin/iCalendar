@@ -1,0 +1,246 @@
+* { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em;}
+.body {background-color: #FFF;margin:0px;padding:0px;}
+
+div.random-position {
+	position: absolute;
+	display:block;
+	width: 200px;
+	height: 50px;
+}
+
+
+div.btn-refresh {
+	position: absolute;
+	display:block;
+	width: 120px;
+	height: 31px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	text-align:center;
+	cursor: pointer;
+	right: 20px;
+	top: 20px;
+	font-size: 15px;
+	padding-top: 6px;
+	
+  	border-radius: 6px;
+  	-moz-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+
+	-webkit-box-shadow: #666 0px 2px 3px;
+	-moz-box-shadow: #666 0px 2px 3px;
+	box-shadow:  0px 2px 3px #666;
+}
+
+div.btn-refresh:hover, div.btn-refresh.hover {
+	background-color: #EEE;
+}
+
+.icalendar-container {
+	font-size: 14px;
+	position: absolute;
+	display:block;
+	width: 360px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	text-align:center;
+	left: 20px;
+	top: 20px;
+	padding: 7px;
+	
+
+	-webkit-box-shadow: 0px 2px 3px #AAA;
+	-moz-box-shadow: 0px 2px 3px #AAA;
+	box-shadow:  0px 2px 3px #AAA;
+}
+
+.bottom-text {
+	position: absolute;
+	bottom: 0px;
+	display: block;
+	font-size: 13px;
+	text-align: center;
+	padding: 10px;
+}
+
+.year-scroll {
+	width: 60px;
+	text-align:center;
+	position: absolute;
+	padding: 0;
+	margin: 0;
+}
+
+ul.year-list,li.year-item {
+	position: relative;
+	z-index: 1200;
+	display: block;
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+	line-height: 23px;
+}
+
+.year-dragger, .year-dragger-bg {
+	display: block;
+	position: absolute;
+	z-index:900;
+	width: 60px;
+	height: 23px;
+	padding: 0;
+	margin:0;
+	top: 0px;
+	left: 0px;
+	cursor: move;
+}
+
+.year-dragger-bg {
+	z-index:900;
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+
+  	border-radius: 4px;
+  	-moz-border-radius: 4px;
+  	-webkit-border-radius: 4px;
+
+	-webkit-box-shadow: inset 1px 0px 1px #AAA;
+	-moz-box-shadow: inset 1px 0px 1px #AAA;
+	box-shadow: inset 1px 0px 1px #AAA;
+}
+
+.month-dragger, .month-dragger-bg {
+	display: block;
+	position: absolute;
+	z-index:1200;
+	width: 80px;
+	height: 70px;
+	padding: 0;
+	margin:0;
+	top: 0px;
+	left: 0px;
+	cursor: move;
+}
+
+.month-dragger-bg {
+	z-index:900;
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+
+  	border-radius: 4px;
+  	-moz-border-radius: 4px;
+  	-webkit-border-radius: 4px;
+
+	-webkit-box-shadow: inset 1px 0px 1px #AAA;
+	-moz-box-shadow: inset 1px 0px 1px #AAA;
+	box-shadow: inset 1px 0px 1px #AAA;
+}
+
+.days-names, .day-name {
+	position: relative;
+	display: block;
+	list-style-type:none;
+	padding: 0;
+	font-size: 12px;
+	line-height: 1px;
+	float: left;
+	font-weight: bold;
+}
+
+.day-name{
+	margin: 2px;
+	padding-left: 10px;
+}
+
+.day-name-weekend {
+	color: red;
+}
+
+.days-container, .month-container, .year-container {
+	font-size: 13px;
+	position: relative;
+	display: block;
+	height: 280px;
+	border: 1px solid #CCC;
+	background-color: #FFF;
+  	border-radius: 4px;
+  	-moz-border-radius: 4px;
+  	-webkit-border-radius: 4px;
+
+
+	-webkit-box-shadow: inset 1px 1px 3px #AAA;
+	-moz-box-shadow: inset 1px 1px 3px #AAA;
+	box-shadow: inset 1px 1px 3px #AAA;
+
+	text-align:center;
+	overflow: hidden;
+}
+
+.days-container {
+	width: 190px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.month-container {
+	background-color: #F7F7F7;
+	width: 80px;
+}
+
+.year-container {
+	background-color: #f2f2f2;
+	width: 60px;
+	cursor: move;
+}
+
+ul.month-list,li.month-item {
+	position: relative;
+	z-index: 1200;
+	display: block;
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+	line-height: 23px;
+}
+
+div.days-scroll table tr, div.days-scroll table tr td {
+	font-size: 15px;
+	padding: 0;
+	margin: 0;
+	height:20px;
+}
+
+div.days-scroll {
+	position: relative;
+}
+
+.month-name {
+	font-size:15px;
+	font-weight: bold;
+	padding: 0px;
+	margin: 0px;
+}
+
+.day-picker {
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 1px;
+	padding-left: 2px;
+	cursor: pointer;
+}
+
+.icalendar-container-full {
+	position: absolute;
+	display: block;
+}
+
+.tdmouseover {
+	background-color: orange;
+}
+
+.cur-day {
+	background-color: #EFEFEF;
+}
