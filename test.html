@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>iCalendar DEMO</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1251"/>
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.6.2.js"></script> 
+		<script type="text/javascript" src="js/jquery.ui.core.js"></script> 
+		<script type="text/javascript" src="js/jquery.ui.widget.js"></script> 
+		<script type="text/javascript" src="js/jquery.ui.mouse.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.draggable.js"></script>
+		<script type="text/javascript" src="js/icalendar.js"></script> 
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var drp = $("#rnd1");
+				drp.css("left",Math.round(Math.random()*($(document).width()-drp.width())));
+				drp.css("top",Math.round(Math.random()*($(document).height()-drp.height())));
+				var drp = $("#rnd2");
+				drp.css("left",Math.round(Math.random()*($(document).width()-drp.width())));
+				drp.css("top",Math.round(Math.random()*($(document).height()-drp.height())));
+
+				$("div.btn-refresh").click(function(ev){
+					var drp = $("#rnd1");
+					drp.css("left",Math.round(Math.random()*($(document).width()-drp.width())));
+					drp.css("top",Math.round(Math.random()*($(document).height()-drp.height())));
+					var drp = $("#rnd2");
+					drp.css("left",Math.round(Math.random()*($(document).width()-drp.width())));
+					drp.css("top",Math.round(Math.random()*($(document).height()-drp.height())));
+				});
+
+
+				$("#date1").iCalendar({lang:'en'});
+				$("#date2").iCalendar({lang:'en'});
+
+			});
+		</script> 
+	</head>
+	<body>
+		<div class='btn-refresh'>Suffle...</div>
+		<div class='random-position' id='rnd1'><input type='text' name='date1' id='date1' /></div>
+		<div class='random-position' id='rnd2'><input type='text' name='date2' id='date2' /></div>
+		<div class='bottom-text'></div>
+		<div id='info'></div>
+	</body>
+</html>
