@@ -149,9 +149,14 @@ ul.year-list,li.year-item {
 	font-weight: bold;
 }
 
+.days-names {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .day-name{
 	margin: 2px;
-	padding-left: 10px;
+	padding-left: 5px;
 }
 
 .day-name-weekend {
@@ -207,10 +212,31 @@ ul.month-list,li.month-item {
 }
 
 div.days-scroll table tr, div.days-scroll table tr td {
+	top: 0px;
 	font-size: 15px;
 	padding: 0;
 	margin: 0;
 	height:20px;
+}
+
+td.day-td,td.day-td-last {
+	border-top: 1px solid #efefef;
+	border-left: 1px solid #efefef;
+	border-bottom: 1px solid #efefef;
+}
+
+td.day-td-last {
+	border-right: 1px solid #efefef;
+}
+
+td.day-td-last-empty {
+	border: 1px solid #efefef;
+}
+
+td.day-td-empty {
+	border-top: 1px solid #efefef;
+	border-right: 1px solid #efefef;
+	border-bottom: 1px solid #efefef;
 }
 
 div.days-scroll {
@@ -243,4 +269,8 @@ div.days-scroll {
 
 .cur-day {
 	background-color: #EFEFEF;
+}
+
+.act-day {
+	background-color: #EFDEBC;
 }
