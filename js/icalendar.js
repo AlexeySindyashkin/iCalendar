@@ -23,6 +23,7 @@ $.widget('my.iCalendar',{
 	},
 	highlightDays: function() {
 		var obj1 = $("#days-container"+this.gid+" > div.days-scroll");
+		if(this.options.HighLight)
 		for(var i=0,l=this.options.HighLight.length;i<l;i++) {
 			obj1.find("#pic-day-"+this.options.HighLight[i]+this.gid).addClass("act-day");
 		}
