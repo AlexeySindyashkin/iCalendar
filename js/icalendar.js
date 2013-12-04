@@ -9,7 +9,7 @@
 $.widget('my.iCalendar',{
 	options: {
 		lang: "ru",
-		years: [2010,2020],
+		years: [(new Date()).getFullYear()-10,(new Date()).getFullYear()+10],
 		year: (new Date()).getFullYear(),
 		day: (new Date()).getDate(),
 		month: ((new Date()).getMonth()+1)
@@ -19,12 +19,19 @@ $.widget('my.iCalendar',{
 	{
 		var obj1 = $("#days-container"+this.gid+" > div.days-scroll");
 		obj1.find("a.cur-day").toggleClass("cur-day");
-		obj1.find("#pic-day-"+this.options.day+"-"+this.options.month+"-"+this.options.year+this.gid).toggleClass("cur-day");
+		obj1.find("#pic-day-"+this.options.day+"-"+this.options.month+"-"+this.options.year+this.gid).addClass("cur-day");
+	},
+	highlightDays: function() {
+		var obj1 = $("#days-container"+this.gid+" > div.days-scroll");
+		for(var i=0,l=this.options.HighLight.length;i<l;i++) {
+			obj1.find("#pic-day-"+this.options.HighLight[i]+this.gid).addClass("act-day");
+		}
 	},
 	pickDay: function(d,m)
 	{
 		var v = ((d<10)?("0"+d):(d))+"."+((m<10)?("0"+m):(m))+"."+this.options.year;
 		this.inputEl.val(v);
+		this.inputEl.change();
 		var obj1 = $("#icalendar-container"+this.gid).data("widget");
 		obj1.options.day = d;
 		obj1.options.month = m;
@@ -77,7 +84,8 @@ $.widget('my.iCalendar',{
 
 		var tt1 = (offx+$("#icalendar-container"+this.gid).position().top+$("#year-container"+this.gid).position().top+$("#year-dragger"+this.gid).height()-$("#year-scroll"+this.gid).height());
 		var tt2 = offx+$("#icalendar-container"+this.gid).position().top+$("#year-container"+this.gid).position().top+$("#year-dragger"+this.gid).height();
-		$("#year-scroll"+this.gid).draggable("option","containment", [0,tt1,100,tt2]);
+//		$("#year-scroll"+this.gid).draggable("option","containment", [0,tt1,100,tt2]);
+		this.highlightDays();
 		this.markCurDay();
 
 	},
@@ -98,13 +106,14 @@ $.widget('my.iCalendar',{
 		return ret;
 	},
 	getPicDays: function(){
+		this.year=this.year||this.options.year;
 		this.dim = [31,(this.year%4==0 && (this.year%100!=0 || this.year%400==0))?(29):(28),31,30,31,30,31,31,30,31,30,31];
-		var cDate = new Date(this.options.year,1,1,0,0,0,0);
+		var cDate = new Date(this.options.year,0,1,0,0,0,0);
 		var ret = "<table border='0' cellpadding='0' cellspacing='1' width='100%'>";
 		for(var i=0;i<12;i++)
 		{
 			ret += "<tr><td colspan='7' align='left'><br/><span class='month-name'>"+this.options.mnm[i]+"</span></td></tr><tr>";
-			var cm = new Date(this.options.year,i,0,0,0,0,0);
+			var cm = new Date(this.options.year,i,1,0,0,0,0);
 			var fd = cm.getDay();
 			if(fd==0)fd=7;
 			fd-=1;
@@ -113,13 +122,15 @@ $.widget('my.iCalendar',{
 			for(var n=0;n<this.dim[i];n++)
 			{
 				if((n+fd)%7==0 && n!=this.dim[i] && n!=0)ret+="</tr><tr>";
-				var dtmp = new Date(this.options.year,i,n).getDay();
-				if(dtmp == 6 || dtmp==0)
-					ret +="<td align='center' valign='middle'><a link='' class='day-picker day-name-weekend' onmouseover='$(this).parent().toggleClass(\"tdmouseover\")' onmouseout='$(this).parent().toggleClass(\"tdmouseover\")' onclick='$(\"#icalendar-container"+this.gid+"\").data(\"widget\").pickDay("+(n+1)+","+(i+1)+")' id='pic-day-"+(n+1)+"-"+(i+1)+"-"+this.options.year+this.gid+"'>"+(n+1)+"</a></td>";
+				var dtmp = new Date(this.options.year,i,n+1).getDay();
+				if(dtmp == 6)
+					ret +="<td align='center' valign='middle' class='day-td'><a link='' class='day-picker day-name-weekend' onmouseover='$(this).parent().toggleClass(\"tdmouseover\")' onmouseout='$(this).parent().toggleClass(\"tdmouseover\")' onclick='$(\"#icalendar-container"+this.gid+"\").data(\"widget\").pickDay("+(n+1)+","+(i+1)+")' id='pic-day-"+(n+1)+"-"+(i+1)+"-"+this.options.year+this.gid+"'>"+(n+1)+"</a></td>";
+				else if (dtmp == 0)
+					ret +="<td align='center' valign='middle' class='day-td day-td-last'><a link='' class='day-picker day-name-weekend' onmouseover='$(this).parent().toggleClass(\"tdmouseover\")' onmouseout='$(this).parent().toggleClass(\"tdmouseover\")' onclick='$(\"#icalendar-container"+this.gid+"\").data(\"widget\").pickDay("+(n+1)+","+(i+1)+")' id='pic-day-"+(n+1)+"-"+(i+1)+"-"+this.options.year+this.gid+"'>"+(n+1)+"</a></td>";
 				else
-					ret +="<td align='center' valign='middle'><a link='' class='day-picker'  onmouseover='$(this).parent().toggleClass(\"tdmouseover\")' onmouseout='$(this).parent().toggleClass(\"tdmouseover\")' onclick='$(\"#icalendar-container"+this.gid+"\").data(\"widget\").pickDay("+(n+1)+","+(i+1)+")' id='pic-day-"+(n+1)+"-"+(i+1)+"-"+this.options.year+this.gid+"'>"+(n+1)+"</a></td>";
+					ret +="<td align='center' valign='middle'  class='day-td'><a link='' class='day-picker'  onmouseover='$(this).parent().toggleClass(\"tdmouseover\")' onmouseout='$(this).parent().toggleClass(\"tdmouseover\")' onclick='$(\"#icalendar-container"+this.gid+"\").data(\"widget\").pickDay("+(n+1)+","+(i+1)+")' id='pic-day-"+(n+1)+"-"+(i+1)+"-"+this.options.year+this.gid+"'>"+(n+1)+"</a></td>";
 			}
-			if((n+fd)%7!=0)for(var k=0;k<(7-(n+fd)%7);k++)ret+="<td align='center' valign='middle'><span class='day-picker'> </span></td>";
+			if((n+fd)%7!=0)for(var k=0;k<(7-(n+fd)%7);k++)ret+="<td align='center' valign='middle' class='"+((k==0)?"day-td-last-empty":"day-td-empty")+"'><span class='day-picker'> </span></td>";
 			ret+="</tr>";
 		}
 		ret+="</table>";
@@ -181,9 +192,45 @@ $.widget('my.iCalendar',{
 					obj1 = $("#icalendar-container"+gid).data("widget");
 					obj1.options.year = obj4.html();
 					obj2 = $("#days-container"+gid+" > div.days-scroll");
-					obj2.html("");
+					obj2.children().remove();
 					obj2.append(obj1.getPicDays());
+					obj1.refresh();
 				}});
+
+		$("#year-scroll"+this.gid).parent().mousewheel(function(ev){
+			var o="";
+			if($(ev.srcElement).hasClass('year-item')) {
+				o = $(ev.target).parent().parent();
+			}else if($(ev.srcElement).hasClass('year-dragger-bg')) {
+				o = $(ev.target).parent().children();
+			}else {
+				o  = $(ev.target).children();
+			}
+
+
+			var gid = (o.prop('id')+"").replace("year-scroll","");
+
+			var obj1 = $("#year-dragger"+gid);
+			var obj2 = $("#year-scroll"+gid);
+
+			var h = obj1.height();
+			var t = (""+obj2.css('top')).replace('px','')*1+ev.deltaY*h;
+			if((obj1.offset().top!=obj2.offset().top || ev.deltaY<0) && (obj2.offset().top!=(obj2.offset().top,obj1.offset().top+h-obj2.height()) || ev.deltaY>0)) {
+				obj2.css('top',t+"px");
+				var obj3 = $("#year-container"+gid);
+				var obj4 = obj3.find('div.year-scroll > ul');
+				var ind = (Math.round((obj1.offset().top - obj2.offset().top)/obj1.height()))
+				obj4 = obj4.find('li:eq('+ind+')');
+				obj1 = $("#icalendar-container"+gid).data("widget");
+				obj1.options.year = obj4.html();
+				obj2 = $("#days-container"+gid+" > div.days-scroll");
+				obj2.children().remove();
+				obj2.append(obj1.getPicDays());
+				obj1.refresh();
+			}
+			$.iCancelEvent(ev);
+		});
+
 
 
 				$("#month-dragger"+this.gid).draggable({axis: 'y',containment: 'parent', drag: function(ev,ui){
@@ -210,6 +257,38 @@ $.widget('my.iCalendar',{
 
 
 
+		$("#month-dragger"+this.gid).parent().mousewheel(function(ev){
+			var o="";
+			if($(ev.srcElement).hasClass('month-item')) {
+				o = $(ev.target).parent().parent();
+			}else if($(ev.srcElement).hasClass('month-dragger')) {
+				o = $(ev.target).parent().children();
+			}else {
+				o  = $(ev.target).children();
+			}
+
+
+			var gid = o.parent().prop('id').replace('month-container','');
+			var obj1 = $("#month-dragger"+gid);
+			var obj2 = $("#month-dragger-bg"+gid);
+			var obj3 = $("#days-container"+gid+" > div.days-scroll");
+			var obj4 = $("#month-container"+gid);
+
+			var dHeight = obj3.height();
+			var sHeight = obj1.height();
+			var mHeight = obj4.height();
+			var tHeight = obj3.parent().height();
+
+			var k = (dHeight-tHeight+10) / (mHeight-sHeight);
+
+			var h = (""+obj1.css('top')).replace("px","")*1;
+			if((obj2.offset().top>obj3.offset().top||ev.deltaY<0)&&(
+			obj2.offset().top<=(obj4.offset().top+mHeight-sHeight)||ev.deltaY>0))
+			obj1.css('top',h-ev.deltaY*10);
+			obj2.css('top',obj1.position().top);
+			obj3.css('top',Math.round(-obj1.position().top*k));
+			$.iCancelEvent(ev);
+		});
 
 
 		var obj1 = $("#year-dragger"+this.gid);
@@ -218,6 +297,37 @@ $.widget('my.iCalendar',{
 		obj2.css('top',obj2.position().top-ind*obj1.height());
 
 
+		$("#days-container"+this.gid).mousewheel(function(ev){
+			var o = $(ev.currentTarget).children();
+			var gid = o.parent().prop('id').replace('days-container','');
+
+
+			var obj1 = $("#month-dragger"+gid);
+			var obj2 = $("#month-dragger-bg"+gid);
+			var obj3 = $("#days-container"+gid+" > div.days-scroll");
+			var obj4 = $("#month-container"+gid);
+			var obj5 = $("#days-container"+gid);
+
+			if(obj3.css('top')=='auto')obj3.css('top','0px');
+
+			var dHeight = obj3.height();
+			var sHeight = obj1.height();
+			var mHeight = obj4.height();
+			var tHeight = obj3.parent().height();
+
+			var k = (dHeight-tHeight+10) / (mHeight-sHeight);
+
+			var h = (""+obj1.css('top')).replace("px","")*1;
+			if((obj3.offset().top<obj5.offset().top||ev.deltaY<0)&&
+			(obj3.offset().top>(obj5.offset().top-obj3.height()+obj5.height())||ev.deltaY>0)) {
+				obj3.css('top',(""+obj3.css('top')).replace('px','')*1+ev.deltaY*10*k);
+				obj1.css('top',h-ev.deltaY*10);
+				obj2.css('top',obj1.position().top);
+			}
+			$.iCancelEvent(ev);
+		});
+
+		this.highlightDays();
 		this.hidewidget();
 
 		this.element.data("widget",this.gid);
